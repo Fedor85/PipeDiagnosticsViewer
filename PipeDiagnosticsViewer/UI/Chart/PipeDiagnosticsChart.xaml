@@ -64,7 +64,6 @@
             <chartingToolkit:LinearAxis Orientation="Y" Title="Angle" ShowGridLines="True" Minimum="0" Maximum="{StaticResource MaxAngle}"/>
         </chartingToolkit:Chart.Axes>
         <chart:ScatterSelectSeries x:Name="PipeDiagnosticsScatterSeries" DependentValuePath="Angle" IndependentValuePath="Distance"
-                                IsSelectionEnabled="True"
-                                DataPointStyle="{StaticResource PipeDiagnosticsDataPointStyle}"/>
+                                    DataPointStyle="{StaticResource PipeDiagnosticsDataPointStyle}"/>
     </chartingToolkit:Chart>
 </UserControl>
