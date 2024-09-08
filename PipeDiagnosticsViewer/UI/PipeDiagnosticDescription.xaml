@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="PipeDiagnosticsViewer.UI.PipeDiagnosticDescription"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cconverters="clr-namespace:PipeDiagnosticsViewer.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="200">
+    <UserControl.Resources>
+        <cconverters:BoolToStringConverter x:Key="BTSConverter"/>
+    </UserControl.Resources>
+        <TextBlock TextWrapping="Wrap">
+            <TextBlock.Inlines>
+                <Run Text="Name: "/>
+                <Run Text="{Binding Name}" FontWeight="Bold"/>
+                <LineBreak/>
+                <Run Text="Distance: "/>
+                <Run Text="{Binding Distance}" FontWeight="Bold"/>
+                <LineBreak/>
+                <Run Text="Angle: "/>
+                <Run Text="{Binding Angle}" FontWeight="Bold"/>
+                <LineBreak/>
+                <Run Text="Width: "/>
+                <Run Text="{Binding Width}" FontWeight="Bold"/>
+                <LineBreak/>
+                <Run Text="Height: "/>
+                <Run Text="{Binding Height}" FontWeight="Bold"/>
+                <LineBreak/>
+                <Run Text="Is Defect: "/>
+                <Run Text="{Binding IsDefect, Converter={StaticResource BTSConverter}}" FontWeight="Bold"/>
+            </TextBlock.Inlines>
+        </TextBlock>
+</UserControl>

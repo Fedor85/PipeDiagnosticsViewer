@@ -1,0 +1,11 @@
+# Visual Studiocache/options directory
+.vs/
+
+#obj
+*/obj/
+
+#bin
+*/bin/
+
+#TestResults
+TestResults/*

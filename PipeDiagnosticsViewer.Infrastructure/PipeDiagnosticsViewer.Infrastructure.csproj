@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Spire.XLS" Version="14.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PipeDiagnosticsViewer.Interfaces\PipeDiagnosticsViewer.Interfaces.csproj" />
+    <ProjectReference Include="..\PipeDiagnosticsViewer.Models\PipeDiagnosticsViewer.Models.csproj" />
+  </ItemGroup>
+
+</Project>

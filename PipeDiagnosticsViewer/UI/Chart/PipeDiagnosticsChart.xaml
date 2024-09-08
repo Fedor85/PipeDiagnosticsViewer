@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="PipeDiagnosticsViewer.UI.Chart.PipeDiagnosticsChart"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=DotNetProjects.DataVisualization.Toolkit"
+             xmlns:converters="clr-namespace:PipeDiagnosticsViewer.Converters"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:ui="clr-namespace:PipeDiagnosticsViewer.UI"
+             xmlns:chart="clr-namespace:PipeDiagnosticsViewer.UI.Chart"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <system:Double x:Key="MaxDistance">20</system:Double>
+        <system:Double x:Key="MaxAngle">12</system:Double>
+        <converters:BoolToBackgroundColorConverter x:Key="BoolToBackgroundColorConverter"/>
+        <converters:BoolToBorderColorConverter x:Key="BoolToBorderColorConverter"/>
+        <converters:PercentageSizeConverter x:Key="PercentageSizeConverter"/>
+        <converters:BorderThicknessConverter x:Key="BorderThicknessConverter"/>
+        <Style x:Key="PipeDiagnosticsDataPointStyle" TargetType="{x:Type chart:ScatterSelectDataPoint}">
+            <EventSetter Event="SizeChanged" Handler="DataPointSizeChangedHandler"/>
+            <Setter Property="Height">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource PercentageSizeConverter}">
+                        <Binding ElementName="PipeDiagnosticsScatterSeries" Path="ActualHeight" />
+                        <Binding Path="Height" />
+                        <Binding Source="{StaticResource MaxAngle}" />
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Width">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource PercentageSizeConverter}">
+                        <Binding ElementName="PipeDiagnosticsScatterSeries" Path="ActualWidth" />
+                        <Binding Path="Width" />
+                        <Binding Source="{StaticResource MaxDistance}" />
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type chart:ScatterSelectDataPoint}">
+                        <Border BorderBrush="{TemplateBinding IsSelected , Converter={StaticResource BoolToBorderColorConverter}}"
+                                BorderThickness="{TemplateBinding IsSelected , Converter={StaticResource BorderThicknessConverter}}" >
+                            <Border Background="{Binding IsDefect , Converter={StaticResource BoolToBackgroundColorConverter}}" Opacity="0.5"/>
+                                <ToolTipService.ToolTip>
+                                    <ui:PipeDiagnosticDescription DataContext="{ TemplateBinding DataContext}"/>
+                                </ToolTipService.ToolTip>
+                            </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <chartingToolkit:Chart>
+        <chartingToolkit:Chart.LegendStyle>
+            <Style TargetType="Control">
+                <Setter Property="Width" Value="0" />
+                <Setter Property="Height" Value="0" />
+            </Style>
+        </chartingToolkit:Chart.LegendStyle>
+        <chartingToolkit:Chart.Axes>
+            <chartingToolkit:LinearAxis Orientation="X" Title="Distance" ShowGridLines="True" Minimum="0" Maximum="{StaticResource  MaxDistance}"/>
+            <chartingToolkit:LinearAxis Orientation="Y" Title="Angle" ShowGridLines="True" Minimum="0" Maximum="{StaticResource MaxAngle}"/>
+        </chartingToolkit:Chart.Axes>
+        <chart:ScatterSelectSeries x:Name="PipeDiagnosticsScatterSeries" DependentValuePath="Angle" IndependentValuePath="Distance"
+                                IsSelectionEnabled="True"
+                                DataPointStyle="{StaticResource PipeDiagnosticsDataPointStyle}"/>
+    </chartingToolkit:Chart>
+</UserControl>
