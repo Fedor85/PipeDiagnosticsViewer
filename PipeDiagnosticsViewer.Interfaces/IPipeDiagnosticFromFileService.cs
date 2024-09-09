@@ -8,6 +8,6 @@ namespace PipeDiagnosticsViewer.Interfaces
 
         IEnumerable<PipeDiagnostic> GetItems(string filePath);
 
-        IAsyncEnumerable<PipeDiagnostic> GetItemsAsync(string filePath);
+        IAsyncEnumerable<PipeDiagnostic> GetItemsAsync(string filePath, CancellationToken cancellationToken);
     }
 }

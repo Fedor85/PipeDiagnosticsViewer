@@ -30,6 +30,8 @@ namespace PipeDiagnosticsViewer.ViewModels
             set { SetProperty(ref pipeDiagnostics, value); }
         }
 
+        private CancellationTokenSource cancelTokenSource;
+
         public PipeDiagnosticsViewModel(IPipeDiagnosticFromFileService pipeDiagnosticFromFileService,
                                         IInteractionRequestService interactionRequestService)
         {
@@ -38,11 +40,13 @@ namespace PipeDiagnosticsViewer.ViewModels
 
             OpenFileCommand = new DelegateCommand(ImportPipeDiagnostics);
             PipeDiagnostics = new ObservableCollection<PipeDiagnostic>();
+            cancelTokenSource = new CancellationTokenSource();
         }
 
         protected override void DeActivate()
         {
             FileName = String.Empty;
+            ResetCancelTokenSource();
             PipeDiagnostics.Clear();
         }
 
@@ -53,6 +57,7 @@ namespace PipeDiagnosticsViewer.ViewModels
                 return;
 
             FileName = String.Empty;
+            ResetCancelTokenSource();
             PipeDiagnostics.Clear();
             DoImportPipeDiagnostics(filePath);
         }
@@ -72,8 +77,18 @@ namespace PipeDiagnosticsViewer.ViewModels
 
         private async Task ImportPipeDiagnostics(string filePath)
         {
-            await foreach(PipeDiagnostic pipeDiagnostic in pipeDiagnosticFromFileService.GetItemsAsync(filePath))
-                PipeDiagnostics.Add(pipeDiagnostic);
+            CancellationToken cancellationToken = cancelTokenSource.Token;
+            await foreach (PipeDiagnostic pipeDiagnostic in pipeDiagnosticFromFileService.GetItemsAsync(filePath, cancellationToken))
+            {
+                if (!cancellationToken.IsCancellationRequested)
+                    PipeDiagnostics.Add(pipeDiagnostic);
+            }
+        }
+
+        private void ResetCancelTokenSource()
+        {
+            cancelTokenSource.Cancel();
+            cancelTokenSource = new CancellationTokenSource();
         }
     }
 }

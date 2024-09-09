@@ -7,7 +7,7 @@ namespace PipeDiagnosticsViewer.Infrastructure
 {
     public class PipeDiagnosticFromFileService : IPipeDiagnosticFromFileService
     {
-        private readonly string[] supportedExtensions = new[] { "csv", "xls", "xlsx" };
+        private readonly string[] supportedExtensions = { "csv", "xls", "xlsx" };
 
         public string[] SupportedExtensions { get => supportedExtensions; }
 
@@ -18,11 +18,11 @@ namespace PipeDiagnosticsViewer.Infrastructure
             return mapper.GetItems();
         }
 
-        public async IAsyncEnumerable<PipeDiagnostic> GetItemsAsync(string filePath)
+        public async IAsyncEnumerable<PipeDiagnostic> GetItemsAsync(string filePath, CancellationToken cancellationToken)
         {
             await using FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             using IMapper<PipeDiagnostic> mapper = GetMapper(stream, FileHelper.GetExtensionWihtoutPoint(filePath));
-            await foreach (PipeDiagnostic pipeDiagnostic in mapper.GetItemsAsync())
+            await foreach (PipeDiagnostic pipeDiagnostic in mapper.GetItemsAsync().WithCancellation(cancellationToken))
                 yield return pipeDiagnostic;
         }
 
