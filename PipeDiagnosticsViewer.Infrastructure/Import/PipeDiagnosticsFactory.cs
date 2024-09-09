@@ -1,6 +1,7 @@
-﻿using PipeDiagnosticsViewer.Models;
+﻿using PipeDiagnosticsViewer.Infrastructure.Import.Base;
+using PipeDiagnosticsViewer.Models;
 
-namespace PipeDiagnosticsViewer.Infrastructure.Import.Base
+namespace PipeDiagnosticsViewer.Infrastructure.Import
 {
     public class PipeDiagnosticsFactory : BaseItemFactory<PipeDiagnostic>
     {
