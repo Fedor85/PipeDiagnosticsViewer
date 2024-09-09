@@ -46,22 +46,27 @@ namespace PipeDiagnosticsViewer.Test
         {
             string filePath = TestHelper.GetTempFilePath("PipeDiagnosticsViewer.Test.Data.objects.csv");
             CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+            List<PipeDiagnostic> pipeDiagnosticsBackup = new List<PipeDiagnostic>();
             List<PipeDiagnostic> pipeDiagnostics = new List<PipeDiagnostic>();
             Task task1 = AddPipeDiagnostic(pipeDiagnostics, filePath, cancelTokenSource.Token);
             cancelTokenSource.Cancel();
             pipeDiagnostics.Clear();
+            pipeDiagnosticsBackup.AddRange(pipeDiagnostics);
             cancelTokenSource = new CancellationTokenSource();
             Task task2 = AddPipeDiagnostic(pipeDiagnostics, filePath, cancelTokenSource.Token);
             cancelTokenSource.Cancel();
             pipeDiagnostics.Clear();
+            pipeDiagnosticsBackup.AddRange(pipeDiagnostics);
             cancelTokenSource = new CancellationTokenSource();
             Task task3 = AddPipeDiagnostic(pipeDiagnostics, filePath, cancelTokenSource.Token);
             cancelTokenSource.Cancel();
             pipeDiagnostics.Clear();
+            pipeDiagnosticsBackup.AddRange(pipeDiagnostics);
             cancelTokenSource = new CancellationTokenSource();
             Task task4 = AddPipeDiagnostic(pipeDiagnostics, filePath, cancelTokenSource.Token);
+            pipeDiagnosticsBackup.AddRange(pipeDiagnostics);
             Task.WaitAll(task1, task2, task3, task4);
-            ClassicAssert.AreEqual(pipeDiagnostics.Count, 9);
+            ClassicAssert.AreEqual(pipeDiagnosticsBackup.Count, 9);
         }
 
         private IEnumerable<PipeDiagnostic> GetPipeDiagnostics(string filePath)
