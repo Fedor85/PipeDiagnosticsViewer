@@ -6,18 +6,16 @@ namespace PipeDiagnosticsViewer.Test
     {
         public static string GetTempFilePath(string resourcesTestFileName)
         {
-            string tempFilePath;
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourcesTestFileName))
-            {
-                string tempPathDirectory = Path.GetTempPath();
-                string extension = Path.GetExtension(resourcesTestFileName);
-                tempFilePath = GetTempFilePath(tempPathDirectory, extension);
-                while (File.Exists(tempFilePath))
-                    tempFilePath = GetTempFilePath(tempPathDirectory, extension);
+            using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourcesTestFileName);
+            string tempPathDirectory = Path.GetTempPath();
+            string extension = Path.GetExtension(resourcesTestFileName);
+            string tempFilePath = GetTempFilePath(tempPathDirectory, extension);
 
-                using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write))
-                    stream.CopyTo(fileStream);
-            }
+            while (File.Exists(tempFilePath))
+                tempFilePath = GetTempFilePath(tempPathDirectory, extension);
+
+            using FileStream fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write);
+            stream.CopyTo(fileStream);
             return tempFilePath;
         }
 

@@ -38,6 +38,7 @@ namespace PipeDiagnosticsViewer.Infrastructure.Import
             string[] parametersValue = sheet.Rows[rowIndex].CellList.Select(item => item.Value).ToArray();
             return itemsFactory.GetItem(parametersValue);
         }
+
         private List<string> GetParameterNames(CellRange sheetRow)
         {
             return sheetRow.CellList.Select(item => item.Text).ToList();

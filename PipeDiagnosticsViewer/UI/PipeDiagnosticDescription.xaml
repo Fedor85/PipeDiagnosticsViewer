@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="200">
     <UserControl.Resources>
-        <cconverters:BoolToStringConverter x:Key="BTSConverter"/>
+        <cconverters:BoolToStringConverter x:Key="BoolToStringConverter"/>
     </UserControl.Resources>
         <TextBlock TextWrapping="Wrap">
             <TextBlock.Inlines>
@@ -27,7 +27,7 @@
                 <Run Text="{Binding Height}" FontWeight="Bold"/>
                 <LineBreak/>
                 <Run Text="Is Defect: "/>
-                <Run Text="{Binding IsDefect, Converter={StaticResource BTSConverter}}" FontWeight="Bold"/>
+            <Run Text="{Binding IsDefect, Converter={StaticResource BoolToStringConverter}}" FontWeight="Bold"/>
             </TextBlock.Inlines>
         </TextBlock>
 </UserControl>

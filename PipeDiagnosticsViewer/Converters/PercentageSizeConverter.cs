@@ -10,12 +10,12 @@ namespace PipeDiagnosticsViewer.Converters
             if (values[0] is not IConvertible || values[1] is not IConvertible)
                 return 0d;
 
-            double chartAtualSize = ((IConvertible)values[0]).ToDouble(null);
-            if (chartAtualSize.Equals(0))
+            double maxSize = ((IConvertible)values[2]).ToDouble(null);
+            if (maxSize.Equals(0))
                 return 0d;
 
+            double chartAtualSize = ((IConvertible)values[0]).ToDouble(null);
             double size = ((IConvertible)values[1]).ToDouble(null);
-            double maxSize = ((IConvertible)values[2]).ToDouble(null);
             return (chartAtualSize * size)/ maxSize;
         }
 

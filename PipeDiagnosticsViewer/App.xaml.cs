@@ -19,7 +19,6 @@ namespace PipeDiagnosticsViewer
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            IDialogService dialogService = containerRegistry.GetContainer().Resolve<IDialogService>();
             containerRegistry.RegisterScoped<IInteractionRequestService, InteractionRequestService>();
             containerRegistry.RegisterScoped<IPipeDiagnosticFromFileService, PipeDiagnosticFromFileService>();
         }
