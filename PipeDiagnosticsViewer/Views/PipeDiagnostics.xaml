@@ -6,6 +6,7 @@
              xmlns:mvvm="http://prismlibrary.com/"
              xmlns:ui="clr-namespace:PipeDiagnosticsViewer.UI"
              xmlns:chart="clr-namespace:PipeDiagnosticsViewer.UI.Chart"
+             xmlns:extensions="clr-namespace:PipeDiagnosticsViewer.UI.Extensions"
              mc:Ignorable="d"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              d:DesignHeight="600" d:DesignWidth="800"  Background="Beige">
@@ -26,7 +27,7 @@
                 <Label Content="{Binding FileName}"/>
             </DockPanel>
             <DockPanel Grid.Row="1">
-                <DataGrid x:Name="PipeDiagnosticsDataGrid"
+                <DataGrid x:Name="PipeDiagnosticsDataGrid"  extensions:DataGridKeyEnterExtension.Register="True" 
                           ItemsSource="{Binding PipeDiagnostics, IsAsync=True}" SelectedItem=""/>
                 <ui:PipeDiagnosticDescription Width="150" Margin="10,0" HorizontalAlignment="Left"
                                               DataContext="{Binding ElementName=PipeDiagnosticsDataGrid,Path=SelectedItem}"/>
