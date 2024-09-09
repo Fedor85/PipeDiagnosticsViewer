@@ -1,20 +1,25 @@
 ﻿using PipeDiagnosticsViewer.Infrastructure.Import.Base;
 using PipeDiagnosticsViewer.Interfaces;
 using Spire.Xls;
+using Spire.Xls.Core;
 
 namespace PipeDiagnosticsViewer.Infrastructure.Import
 {
     public class ExcelMapper<T> : IMapper<T> where T : class
     {
+        private Workbook workbook;
+
         private Worksheet sheet;
 
         private BaseItemFactory<T> itemsFactory;
         public ExcelMapper(Stream stream, BaseItemFactory<T> itemsFactory)
         {
             this.itemsFactory = itemsFactory;
-            Workbook workbook = new Workbook();
+
+            workbook = new Workbook();
             workbook.LoadFromStream(stream);
             sheet = workbook.Worksheets[0];
+            
             itemsFactory.InitializParameterParser(GetParameterNames(sheet.Rows[0]));
         }
 
@@ -47,6 +52,7 @@ namespace PipeDiagnosticsViewer.Infrastructure.Import
         public void Dispose()
         {
             sheet.Dispose();
+            workbook.Dispose();
         }
     }
 }
