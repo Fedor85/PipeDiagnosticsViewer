@@ -77,14 +77,14 @@ namespace PipeDiagnosticsViewer.Test
             return pipeDiagnostics;
         }
 
-        private async Task<List<PipeDiagnostic>> GetPipeDiagnosticsAsync(string filePath, CancellationToken cancellationToken, bool isDeletefile = true)
+        private async Task<List<PipeDiagnostic>> GetPipeDiagnosticsAsync(string filePath, CancellationToken cancellationToken, bool isDeleteFile = true)
         {
             IPipeDiagnosticFromFileService pipeDiagnosticFromFileService = new PipeDiagnosticFromFileService();
             List<PipeDiagnostic> pipeDiagnostics = new List<PipeDiagnostic>();
              await foreach (PipeDiagnostic pipeDiagnostic in pipeDiagnosticFromFileService.GetItemsAsync(filePath, cancellationToken))
                 pipeDiagnostics.Add(pipeDiagnostic);
             
-             if(isDeletefile)
+             if(isDeleteFile)
                 File.Delete(filePath);
 
             return pipeDiagnostics;

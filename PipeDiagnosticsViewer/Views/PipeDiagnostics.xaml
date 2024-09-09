@@ -27,7 +27,7 @@
             </DockPanel>
             <DockPanel Grid.Row="1">
                 <DataGrid x:Name="PipeDiagnosticsDataGrid"
-                          ItemsSource="{Binding PipeDiagnostics}" SelectedItem=""/>
+                          ItemsSource="{Binding PipeDiagnostics, IsAsync=True}" SelectedItem=""/>
                 <ui:PipeDiagnosticDescription Width="150" Margin="10,0" HorizontalAlignment="Left"
                                               DataContext="{Binding ElementName=PipeDiagnosticsDataGrid,Path=SelectedItem}"/>
             </DockPanel>
