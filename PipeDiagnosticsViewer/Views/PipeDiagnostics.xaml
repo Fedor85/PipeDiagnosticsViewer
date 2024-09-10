@@ -24,7 +24,7 @@
             <DockPanel Grid.Row="0">
                 <Button Content="Open file" Command="{Binding OpenFileCommand}" 
                         HorizontalAlignment="Left" Width="80" Height="20" Margin="5"/>
-                <Label Content="{Binding FileName}"/>
+                <Label Content="{Binding FileName}" FontWeight="Bold"/>
             </DockPanel>
             <DockPanel Grid.Row="1">
                 <DataGrid x:Name="PipeDiagnosticsDataGrid"  extensions:DataGridKeyEnterExtension.Register="True" 

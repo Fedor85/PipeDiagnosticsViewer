@@ -66,11 +66,13 @@ namespace PipeDiagnosticsViewer.ViewModels
         {
             try
             {
+                FileName = "Loading ...";
                 await ImportPipeDiagnostics(filePath);
                 FileName = FileHelper.GetFileName(filePath);
             }
             catch (Exception e)
             {
+                FileName = String.Empty;
                 interactionRequestService.ShowError(e.Message);
             }
         }
