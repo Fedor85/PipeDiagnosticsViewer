@@ -11,6 +11,7 @@ namespace PipeDiagnosticsViewer.Infrastructure.Import
         private Worksheet sheet;
 
         private BaseItemFactory<T> itemsFactory;
+
         public ExcelMapper(Stream stream, BaseItemFactory<T> itemsFactory)
         {
             this.itemsFactory = itemsFactory;
@@ -33,6 +34,7 @@ namespace PipeDiagnosticsViewer.Infrastructure.Import
 
         public async IAsyncEnumerable<T> GetItemsAsync()
         {
+            await Task.Yield();
             for (int i = 1; i < sheet.Rows.Length; i++)
                 yield return GetItem(i);
         }
@@ -45,7 +47,7 @@ namespace PipeDiagnosticsViewer.Infrastructure.Import
 
         private List<string> GetParameterNames(CellRange sheetRow)
         {
-            return sheetRow.CellList.Select(item => item.Text).ToList();
+            return sheetRow.CellList.Select(item => item.Text.Trim().ToLower()).ToList();
         }
 
         public void Dispose()

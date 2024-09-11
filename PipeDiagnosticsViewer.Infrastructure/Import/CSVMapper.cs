@@ -34,6 +34,7 @@ namespace PipeDiagnosticsViewer.Infrastructure.Import
 
         public async IAsyncEnumerable<T> GetItemsAsync()
         {
+            await Task.Yield();
             while (!fieldParser.EndOfData)
                 yield return GetItem();
         }
@@ -46,11 +47,7 @@ namespace PipeDiagnosticsViewer.Infrastructure.Import
 
         private List<string> GetParameterNames(string parametersNameLine)
         {
-            List<string> parameterNumbers = new List<string>();
-            foreach (string parameterName in parametersNameLine.Split(separator))
-                parameterNumbers.Add(parameterName.Trim());
-
-            return parameterNumbers;
+            return parametersNameLine.Split(separator).Select(item => item.Trim().ToLower()).ToList();
         }
 
         public void Dispose()

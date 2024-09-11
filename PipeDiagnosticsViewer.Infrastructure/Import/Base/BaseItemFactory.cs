@@ -2,7 +2,10 @@
 {
     public abstract class BaseItemFactory<T> where T : class
     {
-        protected ParameterParser parameterParser { get; set; }
+        private ParameterParser parameterParser { get; set; }
+
+        protected ParameterParser ParameterParser => parameterParser != null ? parameterParser
+                                                                             : throw new ArgumentException("ParameterParser not initialized.");
 
         public void InitializParameterParser(List<string> parameterNames)
         {
@@ -10,11 +13,5 @@
         }
 
         public abstract T GetItem(string[] parametersValue);
-
-        protected void CheckInitialized()
-        {
-            if (parameterParser == null)
-                throw new ArgumentException("ParameterParser not initialized.");
-        }
     }
 }

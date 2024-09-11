@@ -7,14 +7,13 @@ namespace PipeDiagnosticsViewer.Infrastructure.Import
     {
         public override PipeDiagnostic GetItem(string[] parametersValue)
         {
-            CheckInitialized();
             PipeDiagnostic pipeDiagnostic = new PipeDiagnostic();
-            pipeDiagnostic.Name = parameterParser.GetParameterValue(parametersValue, "Name");
-            pipeDiagnostic.Distance = parameterParser.GetParameterValue<double>(parametersValue, "Distance");
-            pipeDiagnostic.Angle = parameterParser.GetParameterValue<double>(parametersValue, "Angle");
-            pipeDiagnostic.Width = parameterParser.GetParameterValue<double>(parametersValue, "Width");
-            pipeDiagnostic.Height = parameterParser.GetParameterValue<double>(parametersValue, "Hegth");
-            pipeDiagnostic.IsDefect = parameterParser.GetParameterValue(parametersValue, "IsDefect").Trim().ToLower().Equals("yes");
+            pipeDiagnostic.Name = ParameterParser.GetParameterValue(parametersValue, "name");
+            pipeDiagnostic.Distance = ParameterParser.GetParameterValue<double>(parametersValue, "distance");
+            pipeDiagnostic.Angle = ParameterParser.GetParameterValue<double>(parametersValue, "angle");
+            pipeDiagnostic.Width = ParameterParser.GetParameterValue<double>(parametersValue, "width");
+            pipeDiagnostic.Height = ParameterParser.GetParameterValue<double>(parametersValue, "hegth");
+            pipeDiagnostic.IsDefect = ParameterParser.GetParameterValue(parametersValue, "isdefect").Trim().ToLower().Equals("yes");
             return pipeDiagnostic;
         }
     }

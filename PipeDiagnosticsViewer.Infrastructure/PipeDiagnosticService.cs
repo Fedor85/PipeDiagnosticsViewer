@@ -21,7 +21,7 @@ namespace PipeDiagnosticsViewer.Infrastructure
         {
             await using FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             using IMapper<PipeDiagnostic> mapper = GetMapper(stream, FileHelper.GetExtensionWihtoutPoint(filePath));
-            await foreach (PipeDiagnostic pipeDiagnostic in mapper.GetItemsAsync().WithCancellation(cancellationToken))
+            await foreach (PipeDiagnostic pipeDiagnostic in mapper.GetItemsAsync().WithCancellation(cancellationToken).ConfigureAwait(false))
                 yield return pipeDiagnostic;
         }
 
