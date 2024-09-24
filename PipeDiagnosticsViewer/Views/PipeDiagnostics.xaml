@@ -7,6 +7,7 @@
              xmlns:ui="clr-namespace:PipeDiagnosticsViewer.UI"
              xmlns:chart="clr-namespace:PipeDiagnosticsViewer.UI.Chart"
              xmlns:extensions="clr-namespace:PipeDiagnosticsViewer.UI.Extensions"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              d:DesignHeight="600" d:DesignWidth="800"  Background="Beige">
@@ -24,18 +25,22 @@
             <DockPanel Grid.Row="0">
                 <Button Content="Open file" Command="{Binding OpenFileCommand}" 
                         HorizontalAlignment="Left" Width="80" Height="20" Margin="5"/>
-                <Label Content="{Binding FileName}" FontWeight="Bold"/>
+                <Label Content="{Binding FileName, IsAsync=True}" FontWeight="Bold"/>
             </DockPanel>
             <DockPanel Grid.Row="1">
-                <DataGrid x:Name="PipeDiagnosticsDataGrid"  extensions:DataGridKeyEnterExtension.Register="True" 
-                          ItemsSource="{Binding PipeDiagnostics, IsAsync=True}" SelectedItem=""/>
+                <DataGrid x:Name="PipeDiagnosticsDataGrid"  extensions:DataGridKeyEnterExtension.Register="True"
+                          ItemsSource="{Binding PipeDiagnostics, IsAsync=True}">
+                    <b:Interaction.Behaviors>
+                        <extensions:SelectedFirstRowBehavior/>
+                    </b:Interaction.Behaviors>
+                </DataGrid>
                 <ui:PipeDiagnosticDescription Width="150" Margin="10,0" HorizontalAlignment="Left"
-                                              DataContext="{Binding ElementName=PipeDiagnosticsDataGrid,Path=SelectedItem}"/>
+                                              DataContext="{Binding ElementName=PipeDiagnosticsDataGrid,Path=SelectedItem, IsAsync=True}"/>
             </DockPanel>
         </Grid>
         <GridSplitter Grid.Row="1" Height="10" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
         <chart:PipeDiagnosticsChart  Grid.Row="2"  ItemsSource="{Binding PipeDiagnostics, IsAsync=True}"
-                                     SelectedItem="{Binding ElementName=PipeDiagnosticsDataGrid,Path=SelectedItem}"/>
+                                     SelectedItem="{Binding ElementName=PipeDiagnosticsDataGrid,Path=SelectedItem, IsAsync=True}"/>
     </Grid>
 
 </UserControl>
